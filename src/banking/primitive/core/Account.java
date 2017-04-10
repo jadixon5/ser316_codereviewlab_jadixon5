@@ -69,7 +69,7 @@ public abstract class Account implements java.io.Serializable {
         state = s;
     }
 
-    public String toString() {
+    public String printAccountInfo() {
         return "Account " + name + " has $" + balance + "and is " + getState()
                 + "\n";
     }
