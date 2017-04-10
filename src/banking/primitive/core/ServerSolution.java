@@ -73,6 +73,16 @@ class ServerSolution implements AccountServer {
 		
 		if (balance < 0.0f) throw new IllegalArgumentException("New account may not be started with a negative balance");
 		
+		List<Account> activeAccounts = getActiveAccounts();
+		for(Account account : activeAccounts)
+		{
+			//check if new account name is in list of active accounts
+			if(account.getName().equalsIgnoreCase(name))
+			{
+				return false;
+			}
+		}
+		
 		return newAccountFactory(type, name, balance);
 	}
 	
