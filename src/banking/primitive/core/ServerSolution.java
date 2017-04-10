@@ -10,17 +10,17 @@ import banking.primitive.core.Account.State;
 
 class ServerSolution implements AccountServer {
 
-	static String fileName = "accounts.ser";
+	private static String fileName = "accounts.ser";
 
 	Map<String,Account> accountMap = null;
 
 	public ServerSolution() {
 		accountMap = new HashMap<String,Account>();
-		File file = new File(fileName);
+		File file = new File(getFileName());
 		ObjectInputStream in = null;
 		try {
 			if (file.exists()) {
-				System.out.println("Reading from file " + fileName + "...");
+				System.out.println("Reading from file " + getFileName() + "...");
 				in = new ObjectInputStream(new FileInputStream(file));
 
 				Integer sizeI = (Integer) in.readObject();
@@ -107,7 +107,7 @@ class ServerSolution implements AccountServer {
 	public void saveAccounts() throws IOException {
 		ObjectOutputStream out = null; 
 		try {
-			out = new ObjectOutputStream(new FileOutputStream(fileName));
+			out = new ObjectOutputStream(new FileOutputStream(getFileName()));
 
 			out.writeObject(Integer.valueOf(accountMap.size()));
 			for (int i=0; i < accountMap.size(); i++) {
@@ -115,7 +115,7 @@ class ServerSolution implements AccountServer {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new IOException("Could not write file:" + fileName);
+			throw new IOException("Could not write file:" + getFileName());
 		} finally {
 			if (out != null) {
 				try {
@@ -125,6 +125,19 @@ class ServerSolution implements AccountServer {
 				}
 			}
 		}
+	}
+	/**
+	 * @return the fileName
+	 */
+	public static String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * @param fileName the fileName to set
+	 */
+	public static void setFileName(String fileName) {
+		ServerSolution.fileName = fileName;
 	}
 
 }
